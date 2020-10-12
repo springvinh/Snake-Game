@@ -1,9 +1,6 @@
 import 'dart:async';
 import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:snake/menu.dart';
 
 class Game extends StatefulWidget {
   @override
@@ -142,66 +139,87 @@ class _GameState extends State<Game> {
 
     return Scaffold(
         key: _scaffoldKey,
-        body: Container(
-          color: Color(0xff0336ff),
-          height: double.infinity,
-          child: Center(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(maxWidth: screenHeight * 0.5),
-              child: SafeArea(
-                child: GestureDetector(
+        body: RawKeyboardListener(
+          focusNode: FocusNode(),
+          onKey: (event) {
+            print(event.logicalKey.debugName);
 
-                  onVerticalDragUpdate: (details) {
-                    
-                    if(direction != 'up' && details.delta.dy > 0) {
-                      direction = 'down';
-                    } else if (direction != 'down' && details.delta.dy < 0) {
-                      direction = 'up';
-                    }
-                    
-                  },
-                  onHorizontalDragUpdate: (details) {
+            String key = event.logicalKey.debugName;
 
-                    if(direction != 'left' && details.delta.dx > 0) {
-                      direction = 'right';
-                    } else if (direction != 'right' && details.delta.dx < 0) {
-                      direction = 'left';
-                    }
-                   
-                  },
+            if(direction != 'up' && key == 'Arrow Down') {
+              direction = 'down';
+            } else if (direction != 'down' && key == 'Arrow Up') {
+              direction = 'up';
+            }
 
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      GridView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: 700,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 20),
-                        itemBuilder: (context, index) {
+            if(direction != 'left' && key == 'Arrow Right') {
+              direction = 'right';
+            } else if (direction != 'right' && key == 'Arrow Left') {
+              direction = 'left';
+            }
 
-                          return Container(
-                            margin: EdgeInsets.all(2.0),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(3.0),
-                              color: food == index ? Color(0xfffe0265) : snakePosition.contains(index) ? snakePosition.last == index ? Color(0xffffde03) : Colors.white : Color.fromRGBO(255, 255, 255, 0.05)
-                            ),
-                          );
-                        },
-                      ),
-                      Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 24.0),
-                              child: Text('SCORE: $score', style: TextStyle(fontSize: 12.0, color: Colors.white, fontWeight: FontWeight.bold),),
-                            ),
-                          ],
+          },
+          child: Container(
+            color: Color(0xff0336ff),
+            height: double.infinity,
+            child: Center(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(maxWidth: screenHeight * 0.5),
+                child: SafeArea(
+                  child: GestureDetector(
+
+                    onVerticalDragUpdate: (details) {
+                      
+                      if(direction != 'up' && details.delta.dy > 0) {
+                        direction = 'down';
+                      } else if (direction != 'down' && details.delta.dy < 0) {
+                        direction = 'up';
+                      }
+                      
+                    },
+                    onHorizontalDragUpdate: (details) {
+
+                      if(direction != 'left' && details.delta.dx > 0) {
+                        direction = 'right';
+                      } else if (direction != 'right' && details.delta.dx < 0) {
+                        direction = 'left';
+                      }
+                     
+                    },
+
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        GridView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: 700,
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 20),
+                          itemBuilder: (context, index) {
+
+                            return Container(
+                              margin: EdgeInsets.all(2.0),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(3.0),
+                                color: food == index ? Color(0xfffe0265) : snakePosition.contains(index) ? snakePosition.last == index ? Color(0xffffde03) : Colors.white : Color.fromRGBO(255, 255, 255, 0.05)
+                              ),
+                            );
+                          },
+                        ),
+                        Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 24.0),
+                                child: Text('SCORE: $score', style: TextStyle(fontSize: 12.0, color: Colors.white, fontWeight: FontWeight.bold),),
+                              ),
+                            ],
+                          )
                         )
-                      )
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),

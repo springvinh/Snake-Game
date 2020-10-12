@@ -4,7 +4,6 @@ import 'package:snake/game.dart';
 class Menu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
@@ -21,7 +20,7 @@ class Menu extends StatelessWidget {
                   SizedBox(
                     width: double.infinity,
                     height: 300.0,
-                    child: Center(child: Text('Snack', style: TextStyle(fontSize: 56.0, fontWeight: FontWeight.bold, color: Colors.white),)),
+                    child: Center(child: Text('Snake', style: TextStyle(fontSize: 56.0, fontWeight: FontWeight.bold, color: Colors.white),)),
                   ),
                   RaisedButton(
                     onPressed: () {
